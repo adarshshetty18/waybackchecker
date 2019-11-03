@@ -13,9 +13,16 @@ Can be used to get juicy information for reconnaissance as the domains that are 
 
 ```cd waybackchecker```
 
-3. Run the following command with the domain file & an output file to save the urls:
+3. Change file permission:
+
+```chmod 766 waybackcheck.py```
+
+
+4. Run the following command with the domain file & an output file to save the urls:
 
 ```./waybackcheck.py paytm.txt out.txt```
+
+5. Play around with the results!!
 
 Feel free to report bugs or issue here: https://github.com/adarshshetty18/waybackchecker/issues.
 
