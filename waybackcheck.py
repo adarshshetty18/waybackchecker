@@ -35,13 +35,28 @@ def write_file(data):
         print('Something went wrong while writing the file!!! <<{}>> '.format(e))
 
 
+def domaincount():
+    try:
+        totaldomains = 0
+        with open(domainlist, 'r') as f:
+            for i in f:
+                totaldomains = totaldomains + 1
+        return totaldomains
+    except Exception as e:
+        print('Something went wrong while reading the file!!! <<{}>> '.format(e))
+        exit()
+
+
 if __name__ == '__main__':
     try:
+        count = 0
+        totalcount = domaincount()
         with open(domainlist, 'r') as domains:
             for domain in domains:
+                count = count + 1
                 if not check_domain(domain.strip()):
                     continue
-                print('Checking for {} in wayback machine!!!'.format(domain))
+                print('Checking for {} in wayback machine!!! ({}/{})'.format(domain,count,totalcount))
                 r = requests.get(url='http://archive.org/wayback/available?url={}'.format(domain))
                 data = r.json()
                 if len(data['archived_snapshots']) > 0:
