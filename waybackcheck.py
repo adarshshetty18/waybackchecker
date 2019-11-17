@@ -4,6 +4,7 @@ import socket
 import sys
 global domainlist
 global outputfile
+global resfile
 
 try:
     domainlist = sys.argv[1]
@@ -17,18 +18,25 @@ except Exception as e:
     print('[ERROR] Please provide output file!')
     exit()
 
+try:
+    resfile = sys.argv[3]
+except Exception as e:
+    print('[ERROR] Please provide output file!')
+    exit()
+
 
 def check_domain(d):
     try:
         data = socket.gethostbyname(d)
+        write_file(d, resfile)
         return False
     except Exception:
         return True
 
 
-def write_file(data):
+def write_file(data, file):
     try:
-        with open(outputfile, 'a+') as line:
+        with open(file, 'a+') as line:
             line.write(data+'\n')
 
     except Exception as e:
@@ -61,7 +69,7 @@ if __name__ == '__main__':
                 data = r.json()
                 if len(data['archived_snapshots']) > 0:
                     print("[OK]WayBack found!!! ::: URL : {}\n".format(data['archived_snapshots']['closest']['url']))
-                    write_file(data['archived_snapshots']['closest']['url'])
+                    write_file(data['archived_snapshots']['closest']['url'], outputfile)
                 else:
                     print("[EH]WayBack not found!!!\n")
         print('Dumped all the positive url to {}'.format(outputfile))
